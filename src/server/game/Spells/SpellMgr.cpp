@@ -2684,6 +2684,16 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->AttributesEx3 |= SPELL_ATTR3_CANT_MISS;
             spellInfo->MaxAffectedTargets = 1;
             break;
+        case 33666: // Sonic Boom
+        case 33923:
+        case 36841:
+        case 38052:
+        case 38488:
+        case 38795:
+        case 38796:
+        case 38897:
+            spellInfo->rangeIndex = 10;
+            break;
         case 45399: // Demonic Vapor Trail Periodic
             spellInfo->rangeIndex = 2;
             break;
