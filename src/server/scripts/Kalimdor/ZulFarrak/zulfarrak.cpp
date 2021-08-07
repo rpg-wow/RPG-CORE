@@ -300,10 +300,14 @@ public:
             }
             else if (destroyingDoor)
             {
-                /// @todo Spell needs proper implementation.
-                DoCastAOE(SPELL_BARREL_EXPLOSION, true);
-                /// @todo leave the area...
-                me->DisappearAndDie();
+                GameObject* Door = me->FindNearestGameObject(GO_END_DOOR, 20);
+                if (Door) {
+                    /// @todo Spell needs proper implementation.
+                    DoCastAOE(SPELL_BARREL_EXPLOSION, true);
+                    Door->SetGoState(GO_STATE_ACTIVE);
+                    /// @todo leave the area...
+                    me->DisappearAndDie();
+                }
             };
         }
 
