@@ -749,13 +749,20 @@ void Map::RemovePlayerFromMap(Player* player, bool remove)
 template<class T>
 void Map::RemoveFromMap(T *obj, bool remove)
 {
+    if (!obj)
+        return;
 
-    obj->RemoveFromWorld();
+    if (obj->IsInWorld())
+        obj->RemoveFromWorld();
+
     if (obj->isActiveObject())
         RemoveFromActive(obj);
 
     obj->UpdateObjectVisibility(true);
-    obj->RemoveFromGrid();
+
+    // Check grid is active before removing objects
+    if (obj->IsInGrid())
+        obj->RemoveFromGrid();
 
     obj->ResetMap();
 
