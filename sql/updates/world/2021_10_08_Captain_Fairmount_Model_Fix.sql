@@ -1,0 +1,1 @@
+UPDATE `world`.`creature_model_info` SET `DisplayID_Other_Gender` = '1855' WHERE `DisplayID` = '1855';

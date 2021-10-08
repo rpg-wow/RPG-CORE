@@ -1,0 +1,9 @@
+DELETE FROM `world`.`gameobject_questender` WHERE `id` = '176190' AND `quest` = '4722';
+DELETE FROM `world`.`gameobject_questender` WHERE `id` = '175233' AND `quest` = '4723'; 
+DELETE FROM `world`.`gameobject_questender` WHERE `id` = '176197' AND `quest` = '4725';
+DELETE FROM `world`.`gameobject_questender` WHERE `id` = '176196' AND `quest` = '4727';
+DELETE FROM `world`.`gameobject_questender` WHERE `id` = '175226' AND `quest` = '4728';
+DELETE FROM `world`.`gameobject_questender` WHERE `id` = '175227' AND `quest` = '4730';
+DELETE FROM `world`.`gameobject_questender` WHERE `id` = '176198' AND `quest` = '4731';
+DELETE FROM `world`.`gameobject_questender` WHERE `id` = '176191' AND `quest` = '4732';
+DELETE FROM `world`.`gameobject_questender` WHERE `id` = '175230' AND `quest` = '4733';
