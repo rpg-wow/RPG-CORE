@@ -1,0 +1,1 @@
+UPDATE `world`.`areatrigger_teleport` SET `target_position_x` = '-248.789' , `target_position_y` = '957.569' , `target_position_z` = '84.355' , `target_orientation` = '1.582' WHERE `id` = '4354'; 
