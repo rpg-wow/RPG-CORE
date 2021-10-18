@@ -323,8 +323,8 @@ void MovementInfo::Read(ByteBuffer& data)
     if (HasMovementFlag(MOVEMENTFLAG_FALLING))
     {
         data >> j_velocity;
-        data >> j_sinAngle;
         data >> j_cosAngle;
+        data >> j_sinAngle;
         data >> j_xyspeed;
     }
 
@@ -359,8 +359,8 @@ void MovementInfo::Write(ByteBuffer& data) const
     if (HasMovementFlag(MOVEMENTFLAG_FALLING))
     {
         data << j_velocity;
-        data << j_sinAngle;
         data << j_cosAngle;
+        data << j_sinAngle;
         data << j_xyspeed;
     }
 
