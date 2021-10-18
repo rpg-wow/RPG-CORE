@@ -1,5 +1,5 @@
 
-![logo](https://raw.githubusercontent.com/coolzoom/OregonCore/master/logo.png) Welcome to OregonCore!
+![logo](https://raw.githubusercontent.com/talamortis/OregonCore/master/logo.png) Welcome to OregonCore!
 =================================================================================
 
 OregonCore is a piece of software that targets emulation of a World of Warcraft: The Burning Crusade game server. Our goal is to create a stable MMO framework and to help teach and learn development among our community. OregonCore has sustained itself with its tight knit community of developers, testers and bug reporters and thanks all those who have been involved with the project over the years.
@@ -14,8 +14,8 @@ Github Action Build Status
 |VisualStudio          |Windows x64           | eluna enabled        |[![Build1][27]][25]   |
 
 [25]: https://travis-ci.org/github/talamortis/OregonCore
-[26]:https://github.com/coolzoom/OregonCore/actions/workflows/oregoncore.yml/badge.svg
-[27]:https://github.com/coolzoom/OregonCore/actions/workflows/OregonCore-Windows-bin.yml/badge.svg
+[26]:https://github.com/talamortis/OregonCore/actions/workflows/oregoncore.yml/badge.svg
+[27]:https://github.com/talamortis/OregonCore/actions/workflows/OregonCore-Windows-bin.yml/badge.svg
 
 NEWS!! Click here to download the fresh windows build directly! [windowsrelease][9]
 
