@@ -1,26 +1,23 @@
 
-![logo](https://www.oregon-core.net/images/logo-github.png) Welcome to OregonCore!
+![logo](https://raw.githubusercontent.com/coolzoom/OregonCore/master/logo.png) Welcome to OregonCore!
 =================================================================================
 
 OregonCore is a piece of software that targets emulation of a World of Warcraft: The Burning Crusade game server. Our goal is to create a stable MMO framework and to help teach and learn development among our community. OregonCore has sustained itself with its tight knit community of developers, testers and bug reporters and thanks all those who have been involved with the project over the years.
 
-Build Status
+Github Action Build Status
 ------------
 
 |Compiler              |Platform              | Environment          |Status                |
 |:---------------------|:---------------------|:---------------------|:--------------------:|
-|gcc/g++               |Linux x64             | eluna disabled       |[![Build1][21]][25]   |
-|gcc/g++               |Linux x64             | eluna enabled        |[![Build1][22]][25]   |
-|clang/clang++         |Linux x64             | eluna disabled       |[![Build1][23]][25]   |
-|clang/clang++         |Linux x64             | eluna enabled        |[![Build1][24]][25]   |
-
-[21]: https://travis-badge.herokuapp.com/repos/talamortis/OregonCore/branches/master/1
-[22]: https://travis-badge.herokuapp.com/repos/talamortis/OregonCore/branches/master/2
-[23]: https://travis-badge.herokuapp.com/repos/talamortis/OregonCore/branches/master/3
-[24]: https://travis-badge.herokuapp.com/repos/talamortis/OregonCore/branches/master/4
+|gcc/g++               |Linux x64             | eluna enabled        |[![Build1][26]][25]   |
+|VisualStudio          |Windows x64           | eluna disabled       |[![Build1][27]][25]   |
+|VisualStudio          |Windows x64           | eluna enabled        |[![Build1][27]][25]   |
 
 [25]: https://travis-ci.org/github/talamortis/OregonCore
+[26]:https://github.com/coolzoom/OregonCore/actions/workflows/oregoncore.yml/badge.svg
+[27]:https://github.com/coolzoom/OregonCore/actions/workflows/OregonCore-Windows-bin.yml/badge.svg
 
+NEWS!! Click here to download the fresh windows build directly! [windowsrelease][9]
 
 Docs, Community and Support
 ---------------------------
@@ -41,5 +38,6 @@ If you have found a bug you may report it on our bugtracker, issues must include
 [6]: https://forums.oregon-core.net/
 [7]: https://travis-ci.org/talamortis/OregonCore
 [8]: https://ci.appveyor.com/project/OregonCore/OregonCore/branch/master
+[9]: https://github.com/coolzoom/OregonCore/releases
 
 
