@@ -5,10 +5,9 @@ on: [push]
 # on:
 #   schedule:
     # every day at 6am
-#     - cron:  '0 6 * * *'
+#     - cron:  '0 6 * * *'1
 
-env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+env:  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
   REPO_DIR : ${{github.workspace}}
   BUILD_DIR: ${{github.workspace}}/bin/builddir
@@ -20,10 +19,10 @@ jobs:
     strategy:
       matrix:
        include:
-          - OPTIONAL_DEFINES: "-DTOOLS=1 -DSERVERS=1 -DSCRIPTS=1 -DELUNA=0 -DWITH_DOCS=1 -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_EXTRACTORS=1"
+          - OPTIONAL_DEFINES: "-DTOOLS=1 -DSERVERS=1 -DSCRIPTS=1 -DELUNA=0 -DWITH_DOCS=1 -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0"
             TYPE: "default"
 
-          - OPTIONAL_DEFINES: "-DTOOLS=1 -DSERVERS=1 -DSCRIPTS=1 -DELUNA=1 -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_EXTRACTORS=1"
+          - OPTIONAL_DEFINES: "-DTOOLS=1 -DSERVERS=1 -DSCRIPTS=1 -DELUNA=1 -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0"
             TYPE: "with-eluna"
 
 
