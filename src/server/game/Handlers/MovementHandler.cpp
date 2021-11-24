@@ -529,8 +529,9 @@ void WorldSession::HandleMoveKnockBackAck(WorldPacket& recv_data)
     movementInfo.Write(data);
 
     /* This is sent in addition to the rest of the movement data (yes, angle+velocity are sent twice) */
-    data << movementInfo.j_sinAngle;
+
     data << movementInfo.j_cosAngle;
+    data << movementInfo.j_sinAngle;
     data << movementInfo.j_xyspeed;
     data << movementInfo.j_velocity;
 
