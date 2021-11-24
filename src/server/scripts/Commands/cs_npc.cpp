@@ -83,6 +83,7 @@ public:
             { "textemote",      SEC_GAMEMASTER,     false, &HandleNpcTextEmoteCommand,           "" },
             { "whisper",        SEC_GAMEMASTER,     false, &HandleNpcWhisperCommand,             "" },
             { "yell",           SEC_GAMEMASTER,     false, &HandleNpcYellCommand,                "" },
+            { "selfcast",       SEC_GAMEMASTER,     false, &HandleNpcSelfCastCommand,            "" },
             { "add",            SEC_GAMEMASTER,     false, nullptr,                              "", npcAddCommandTable },
             { "set",            SEC_ADMINISTRATOR,  false, nullptr,                              "", npcSetCommandTable },
             { "follow",         SEC_GAMEMASTER,     false, nullptr,                              "", npcFollowCommandTable },
@@ -94,6 +95,20 @@ public:
             { "npc",            SEC_MODERATOR,      false, nullptr,                              "", npcCommandTable }
         };
         return commandTable;
+    }
+
+
+    static bool HandleNpcSelfCastCommand(ChatHandler* handler, const char* args)
+    {
+        if (!*args)
+            return false;
+
+        Unit* npc = handler->getSelectedCreature();
+
+        if (!npc)
+            return false;
+
+        npc->ToCreature()->CastSpell(npc, atol(args), false);
     }
 
     static bool HandleNpcDeleteItemCommand(ChatHandler* handler, const char* args)
