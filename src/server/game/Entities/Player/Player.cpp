@@ -213,6 +213,32 @@ inline void KillRewarder::_RewardXP(Player* player, float rate)
         else
             xp = 0;
     }
+    else
+    {
+
+        // Get threat list of victim
+        ThreatContainer::StorageType threatlist = _victim->getThreatManager().getThreatList();
+        ThreatContainer::StorageType::const_iterator i = threatlist.begin();
+
+        // Players should only recieve full amount of xp if the assisted player is the same level/ slightly higher.
+        // This will reduce XP boosting while not grouped
+        // Not sure on the calculations as can not find any documentation so will implement like player was in a group.
+        if (threatlist.size() > 1)
+        {
+            for (i = threatlist.begin(); i != threatlist.end(); ++i)
+            {
+                Unit* pUnit = Unit::GetUnit((*_victim), (*i)->getUnitGuid());
+                if (pUnit && pUnit->GetTypeId() == TYPEID_PLAYER)
+                {
+                    if (pUnit->ToPlayer()->isHonorOrXPTarget(_victim))
+                        xp = (xp * rate);
+                    else
+                        xp = (xp * rate / 2) + 1;
+                }
+            }
+        }
+    }
+
     if (xp)
     {
         // 4.2.2. Apply auras modifying rewarded XP (SPELL_AURA_MOD_XP_PCT).
