@@ -101,26 +101,27 @@ Quest::Quest(Field* questRecord)
     RewHonorableKills = questRecord[96].GetUInt32();
     RewOrReqMoney = questRecord[97].GetInt32();
     RewMoneyMaxLevel = questRecord[98].GetUInt32();
-    RewSpell = questRecord[99].GetUInt32();
-    RewSpellCast = questRecord[100].GetUInt32();
-    RewMailTemplateId = questRecord[101].GetUInt32();
-    RewMailDelaySecs = questRecord[102].GetUInt32();
-    PointMapId = questRecord[103].GetUInt32();
-    PointX = questRecord[104].GetFloat();
-    PointY = questRecord[105].GetFloat();
-    PointOpt = questRecord[106].GetUInt32();
+    RewXP = questRecord[99].GetUInt32();
+    RewSpell = questRecord[100].GetUInt32();
+    RewSpellCast = questRecord[101].GetUInt32();
+    RewMailTemplateId = questRecord[102].GetUInt32();
+    RewMailDelaySecs = questRecord[103].GetUInt32();
+    PointMapId = questRecord[104].GetUInt32();
+    PointX = questRecord[105].GetFloat();
+    PointY = questRecord[106].GetFloat();
+    PointOpt = questRecord[107].GetUInt32();
 
     for (int i = 0; i < QUEST_EMOTE_COUNT; ++i)
-        DetailsEmote[i] = questRecord[107 + i].GetUInt32();
+        DetailsEmote[i] = questRecord[108 + i].GetUInt32();
 
-    IncompleteEmote = questRecord[111].GetUInt32();
-    CompleteEmote = questRecord[112].GetUInt32();
+    IncompleteEmote = questRecord[112].GetUInt32();
+    CompleteEmote = questRecord[113].GetUInt32();
 
     for (int i = 0; i < QUEST_EMOTE_COUNT; ++i)
-        OfferRewardEmote[i] = questRecord[113 + i].GetInt32();
+        OfferRewardEmote[i] = questRecord[114 + i].GetInt32();
 
-    QuestStartScript = questRecord[117].GetUInt32();
-    QuestCompleteScript = questRecord[118].GetUInt32();
+    QuestStartScript = questRecord[118].GetUInt32();
+    QuestCompleteScript = questRecord[119].GetUInt32();
 
     _reqItemsCount = 0;
     _reqCreatureOrGOcount = 0;
@@ -157,6 +158,7 @@ uint32 Quest::XPValue (Player* pPlayer) const
             uint32 pLevel = pPlayer->getLevel();
             uint32 qLevel = QuestLevel > 0 ? (uint32)QuestLevel : 0;
             float fullxp = 0;
+
             if (qLevel >= 65)
                 fullxp = RewMoneyMaxLevel / 6.0f;
             else if (qLevel == 64)
@@ -169,6 +171,13 @@ uint32 Quest::XPValue (Player* pPlayer) const
                 fullxp = RewMoneyMaxLevel / 1.2f;
             else if (qLevel > 0 && qLevel <= 60)
                 fullxp = RewMoneyMaxLevel / 0.6f;
+
+            if (RewXP > 0)
+            {
+                fullxp = RewXP;
+                return uint32(ceilf(fullxp));
+            }
+                
 
             if (pLevel <= qLevel + 5)
                 return uint32(ceilf(fullxp));

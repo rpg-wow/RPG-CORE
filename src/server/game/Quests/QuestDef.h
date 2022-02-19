@@ -454,6 +454,7 @@ class Quest
         uint32 RewHonorableKills;
         int32  RewOrReqMoney;
         uint32 RewMoneyMaxLevel;
+        uint32 RewXP;
         uint32 RewSpell;
         uint32 RewSpellCast;
         uint32 RewMailTemplateId;
