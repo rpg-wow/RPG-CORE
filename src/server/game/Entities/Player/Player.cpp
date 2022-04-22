@@ -2071,12 +2071,25 @@ void Player::ProcessDelayedOperations()
     m_DelayedOperations = 0;
 }
 
+void Player::ClearCharmFlags()
+{
+    ClearUnitState(CHARM_TYPE_POSSESS & ~CHARM_TYPE_CHARM);
+    
+    RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PLAYER_CONTROLLED);
+}
+
 void Player::AddToWorld()
 {
+    ///- Before adding to world Clear Unit Charm and Control Flags
+    ClearCharmFlags();
+
     ///- Do not add/remove the player from the object storage
     ///- It will crash when updating the ObjectAccessor
     ///- The player should only be added when logging in
     Unit::AddToWorld();
+
+    ///- After adding player to world check to make suure flags are removed
+    ClearCharmFlags();
 
     for (uint8 i = PLAYER_SLOT_START; i < PLAYER_SLOT_END; ++i)
         if (m_items[i])

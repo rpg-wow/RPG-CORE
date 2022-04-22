@@ -2100,6 +2100,8 @@ class Player : public Unit, public GridObject<Player>
         }
         void ProcessDelayedOperations();
 
+        void ClearCharmFlags();
+
         void CheckAreaExploreAndOutdoor(void);
 
         static uint32 TeamForRace(uint8 race);
