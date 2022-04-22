@@ -18452,6 +18452,24 @@ void Player::ContinueTaxiFlight()
     uint32 mountDisplayId = sObjectMgr.GetTaxiMount(sourceNode, GetTeam());
     uint32 path = m_taxi.GetCurrentTaxiPath();
 
+    switch (path)
+    {
+    case 512:
+        mountDisplayId = 17447;
+        break;
+    case 724:
+        mountDisplayId = 17697;
+        break;
+    case 779:
+    case 784:
+    case 788:
+        mountDisplayId = 22840;
+        break;
+    case 606:
+        mountDisplayId = 6851;
+        break;
+    }
+
     // search appropriate start path node
     uint32 startNode = 0;
 
