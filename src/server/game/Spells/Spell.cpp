@@ -2564,14 +2564,6 @@ void Spell::cast(bool skipCheck)
             m_caster->ToPlayer()->RemoveSpellCooldown(m_spellInfo->Id, true);
     }
 
-    if (Player* player = m_caster->ToPlayer())
-    {
-        Pet* playerPet = player->GetPet();
-
-        if (playerPet && playerPet->IsAlive())
-            playerPet->AI()->OwnerAttacked(m_targets.getUnitTarget());
-    }
-
     SetExecutedCurrently(false);
 }
 
