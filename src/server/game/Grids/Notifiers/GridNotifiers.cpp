@@ -296,7 +296,7 @@ void DynamicObjectUpdater::VisitHelper(Unit* target)
     }
     else
     {
-        if (!i_check->IsHostileTo(target))
+        if (!i_check->IsValidAttackTarget(target))
             return;
     }
 
