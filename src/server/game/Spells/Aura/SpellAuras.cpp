@@ -3713,23 +3713,22 @@ void Aura::HandleModThreat(bool apply, bool Real)
     switch (GetId())
     {
         // Arcane Shroud
-        case 26400:
-            level_diff = m_target->getLevel() - 60;
-            multiplier = 2;
-            break;
+    case 26400:
+        level_diff = m_target->getLevel() - 60;
+        multiplier = 2;
+        break;
         // The Eye of Diminution
-        case 28862:
-            level_diff = m_target->getLevel() - 60;
-            multiplier = 1;
-            break;
+    case 28862:
+        level_diff = m_target->getLevel() - 60;
+        multiplier = 1;
+        break;
     }
     if (level_diff > 0)
         m_modifier.m_amount += multiplier * level_diff;
 
-    if (m_target->GetTypeId() == TYPEID_PLAYER)
-        for (int8 i = 0; i < MAX_SPELL_SCHOOL; i++)
-            if (GetMiscValue() & int32(1 << i))
-                ApplyPercentModFloatVar(m_target->m_threatModifier[i], float(GetModifierValue()), apply);
+    for (int8 i = 0; i < MAX_SPELL_SCHOOL; i++)
+        if (GetMiscValue() & int32(1 << i))
+            ApplyPercentModFloatVar(m_target->m_threatModifier[i], float(GetModifierValue()), apply);
 
 }
 
