@@ -119,6 +119,7 @@ class CreatureAI : public UnitAI
         virtual void JustSummoned(Creature*) {}
         virtual void IsSummonedBy(Unit* /*summoner*/) {}
 
+        virtual void SummonedCreatureDies(Creature* /*summon*/, Unit* /*killer*/) {}
         virtual void SummonedCreatureDespawn(Creature* /*unit*/) {}
 
         // Called when hit by a spell

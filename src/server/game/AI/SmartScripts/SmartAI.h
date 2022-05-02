@@ -90,6 +90,9 @@ class SmartAI : public CreatureAI
         // Called when the creature summon successfully other creature
         void JustSummoned(Creature* creature) override;
 
+        // Called when summoned creature dies
+        void SummonedCreatureDies(Creature* summon, Unit*) override;
+
         // Tell creature to attack and follow the victim
         void AttackStart(Unit* who) override;
 
@@ -249,6 +252,8 @@ public:
     void SetScript9(SmartScriptHolder& e, uint32 entry, Unit* invoker);
     void OnGameEvent(bool start, uint16 eventId) override;
     void OnStateChanged(uint32 state, Unit* unit) override;
+    // Called when a summoned unit dies
+    void SummonedCreatureDies(Creature* summon, Unit* killer);
 
 private:
     SmartScript mScript;

@@ -32,6 +32,16 @@ Unit* TempSummon::GetSummoner() const
     return m_summonerGUID ? ObjectAccessor::GetUnit(*this, m_summonerGUID) : NULL;
 }
 
+Unit* TempSummon::GetSummonerUnit() const
+{
+    if (WorldObject* summoner = GetSummoner())
+    {
+        return summoner->ToUnit();
+    }
+
+    return nullptr;
+}
+
 void TempSummon::Update(uint32 diff)
 {
     Creature::Update(diff);

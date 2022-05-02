@@ -13010,6 +13010,11 @@ void Unit::Kill(Unit* victim, bool durabilityLoss)
 #endif
 
 
+       if (TempSummon* summon = creature->ToTempSummon())
+           if (Unit* summoner = summon->GetSummonerUnit())
+               if (summoner->ToCreature() && summoner->IsAIEnabled)
+                   summoner->ToCreature()->AI()->SummonedCreatureDies(creature, this);
+
         // Call creature just died function
         if (creature->IsAIEnabled)
             creature->AI()->JustDied(this);
