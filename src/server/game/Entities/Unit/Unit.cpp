@@ -1091,7 +1091,7 @@ uint32 Unit::DealDamage(Unit* victim, uint32 damage, CleanDamage const* cleanDam
             victim->ToCreature()->SetPlayerDamaged(true);
     }
 
-    sScriptMgr.OnDealDamage(this, damage);
+    sScriptMgr.OnDealDamage(this, damage, spellProto, damagetype);
 
     if (health <= damage)
     {
@@ -3892,6 +3892,8 @@ bool Unit::AddAura(Aura* Aur)
     }
 
     SpellEntry const* aurSpellInfo = Aur->GetSpellProto();
+    Modifier* mod = Aur->GetModifier();
+    sScriptMgr.OnModifyAura(this, Aur, mod);
 
     spellEffectPair spair = spellEffectPair(Aur->GetId(), Aur->GetEffIndex());
     bool stackModified = false;
@@ -3935,7 +3937,7 @@ bool Unit::AddAura(Aura* Aur)
                         aur2->SetAuraProcCharges(Aur->m_procCharges);
                         aur2->UpdateAuraDuration();
                         aur2->UpdateAuraCharges();
-                        *aur2->GetModifier() = *Aur->GetModifier();
+                        *aur2->GetModifier() = *mod;
                         delete Aur;
                         return true;
                     }
@@ -4005,6 +4007,7 @@ bool Unit::AddAura(Aura* Aur)
 
     // add aura, register in lists and arrays
     Aur->_AddAura();
+
     m_Auras.insert(AuraMap::value_type(spellEffectPair(Aur->GetId(), Aur->GetEffIndex()), Aur));
     if (Aur->GetModifier()->m_auraname < TOTAL_AURAS)
     {
@@ -4018,7 +4021,6 @@ bool Unit::AddAura(Aura* Aur)
             && (Aur->GetModifier()->m_auraname != SPELL_AURA_MOD_POSSESS)) //only dummy aura is breakable
             m_ccAuras.push_back(Aur);
     }
-
     Aur->ApplyModifier(true, true);
 
     uint32 id = Aur->GetId();
@@ -8464,6 +8466,8 @@ uint32 Unit::SpellDamageBonus(Unit* victim, SpellEntry const* spellProto, uint32
     if (GetTypeId() == TYPEID_UNIT && !IsPet())
         tmpDamage *= ToCreature()->GetSpellDamageMod(ToCreature()->GetCreatureTemplate()->rank);
 
+    sScriptMgr.OnGetSpellDamageBonus(this, victim, spellProto, tmpDamage, damagetype);
+
     return tmpDamage > 0 ? uint32(tmpDamage) : 0;
 }
 
@@ -8925,6 +8929,8 @@ uint32 Unit::SpellHealingBonus(SpellEntry const* spellProto, uint32 healamount, 
             heal = heal * (100 + pctMod) / 100;
     }
 
+    sScriptMgr.OnGetSpellHealingBonus(this, spellProto, heal, damagetype, victim);
+
     heal *= TotalHealPct;
 
     return heal < 0 ? 0 : uint32(heal);
@@ -9270,6 +9276,8 @@ void Unit::MeleeDamageBonus(Unit* victim, uint32* pdamage, WeaponAttackType attT
     if (spellProto)
         if (Player* modOwner = GetSpellModOwner())
             modOwner->ApplySpellMod(spellProto->Id, SPELLMOD_DAMAGE, tmpDamage);
+
+    sScriptMgr.OnGetMeleeDamageBonus(this, victim, tmpDamage, attType, spellProto);
 
     tmpDamage = (tmpDamage + TakenFlatBenefit) * TakenTotalMod;
 

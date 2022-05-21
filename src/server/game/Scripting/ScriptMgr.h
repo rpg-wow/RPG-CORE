@@ -766,9 +766,13 @@ protected:
     UnitScript(const char* name);
 public:
 
-    // Called when a unit deals damage to another unit
-    virtual void OnDealDamage(Unit* /*unit*/, uint32& /*Damage*/) {}
+    virtual void OnGetSpellDamageBonus(Unit* /*caster*/, Unit* /*victim*/, SpellEntry const* /*spellProto*/, float& /*pdamage*/, DamageEffectType /*damagetype*/) {}
+    virtual void OnGetSpellHealingBonus(Unit* /*caster*/, SpellEntry const* /*spellProto*/, float& /*healamount*/, DamageEffectType /*damagetype*/, Unit* /*victim*/) {}
+    virtual void OnGetMeleeDamageBonus(Unit* /*caster*/, Unit* /*victim*/, float& /*damage*/, WeaponAttackType /*attType*/, SpellEntry const* /*spellProto*/) {}
+    virtual void OnModifyAura(Unit* /*caster*/, Aura* /*aura*/, Modifier*& /*modifier*/) {}
 
+    // Called when a unit deals damage to another unit
+    virtual void OnDealDamage(Unit* /*unit*/, uint32& /*Damage*/, SpellEntry const* /*spellProto*/, DamageEffectType /*damagetype*/) {}
     // Called when a unit deals healing to another unit
     virtual void OnHeal(Unit* /*healer*/, Unit* /*reciever*/, uint32& /*gain*/) { }
 };
@@ -992,8 +996,12 @@ public : /* GuildScript*/
     void OnGuildDisband(Guild* guild);
 
 public: /* Unit Script */
+    void OnGetSpellDamageBonus(Unit* caster, Unit* victim, SpellEntry const* spellProto, float& pdamage, DamageEffectType damagetype);
+    void OnGetSpellHealingBonus(Unit* caster, SpellEntry const* spellProto, float& healamount, DamageEffectType damagetype, Unit* victim);
+    void OnGetMeleeDamageBonus(Unit* caster, Unit* victim, float& damage, WeaponAttackType attType, SpellEntry const* spellProto);
+    void OnModifyAura(Unit* caster, Aura* aur, Modifier*& mod);
 
-    void OnDealDamage(Unit* unit, uint32& amount);
+    void OnDealDamage(Unit* unit, uint32& amount, SpellEntry const* spellProto, DamageEffectType damagetype);
     void OnHeal(Unit* healer, Unit* reciever, uint32& gain);
 
 public: /* ScriptRegistry */

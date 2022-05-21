@@ -1498,9 +1498,29 @@ void ScriptMgr::OnGuildDisband(Guild* guild)
     FOREACH_SCRIPT(GuildScript)->OnDisband(guild);
 }
 
-void ScriptMgr::OnDealDamage(Unit* unit, uint32& amount)
+void ScriptMgr::OnGetSpellDamageBonus(Unit* caster, Unit* victim, SpellEntry const* spellProto, float& pdamage, DamageEffectType damagetype)
 {
-    FOREACH_SCRIPT(UnitScript)->OnDealDamage(unit, amount);
+    FOREACH_SCRIPT(UnitScript)->OnGetSpellDamageBonus(caster, victim, spellProto, pdamage, damagetype);
+}
+
+void ScriptMgr::OnGetSpellHealingBonus(Unit* caster, SpellEntry const* spellProto, float& healamount, DamageEffectType damagetype, Unit* victim)
+{
+    FOREACH_SCRIPT(UnitScript)->OnGetSpellHealingBonus(caster, spellProto, healamount, damagetype, victim);
+}
+
+void ScriptMgr::OnGetMeleeDamageBonus(Unit* caster, Unit* victim, float& damage, WeaponAttackType attType, SpellEntry const* spellProto)
+{
+    FOREACH_SCRIPT(UnitScript)->OnGetMeleeDamageBonus(caster, victim, damage, attType, spellProto);
+}
+
+void ScriptMgr::OnModifyAura(Unit* caster, Aura* aur, Modifier*& mod)
+{
+    FOREACH_SCRIPT(UnitScript)->OnModifyAura(caster, aur, mod);
+}
+
+void ScriptMgr::OnDealDamage(Unit* unit, uint32& amount, SpellEntry const* spellProto, DamageEffectType damagetype)
+{
+    FOREACH_SCRIPT(UnitScript)->OnDealDamage(unit, amount, spellProto, damagetype);
 }
 
 void ScriptMgr::OnHeal(Unit* healer, Unit* reciever, uint32& gain)
