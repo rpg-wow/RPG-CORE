@@ -36,7 +36,11 @@
 #include <sys/file.h>
 #endif
 
-static const my_bool my_true = 1;
+#if PLATFORM == PLATFORM_UNIX
+static bool my_true = 1;
+#else
+static my_bool my_true = 1;
+#endif
 
 size_t Database::db_count = 0;
 
