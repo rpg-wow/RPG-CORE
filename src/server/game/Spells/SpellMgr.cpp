@@ -1620,7 +1620,7 @@ bool SpellMgr::IsNoStackSpellDueToSpell(uint32 spellId_1, uint32 spellId_2, bool
         case SPELL_SPECIFIC_CURSE:
         case SPELL_SPECIFIC_WARLOCK_CORRUPTION:
         case SPELL_SPECIFIC_JUDGEMENT:
-           return sameCaster == (spellSpec == GetSpellSpecific(spellId_2));
+           return spellSpec == GetSpellSpecific(spellId_2);
         default:
             break;
     }
@@ -1692,10 +1692,12 @@ SpellGroupStackRule SpellMgr::CheckSpellGroupStackRules(uint32 spellid_1, uint32
     spellid_2 = GetFirstSpellInChain(spellid_2);
     if (spellid_1 == spellid_2)
         return SPELL_GROUP_STACK_RULE_DEFAULT;
+
     // find SpellGroups which are common for both spells
     SpellSpellGroupMapBounds spellGroup1 = GetSpellSpellGroupMapBounds(spellid_1);
     std::set<SpellGroup> groups;
-    for (SpellSpellGroupMap::const_iterator itr = spellGroup1.first; itr != spellGroup1.second; ++itr)
+
+    for (auto itr = spellGroup1.first; itr != spellGroup1.second; ++itr)
     {
         if (IsSpellMemberOfSpellGroup(spellid_2, itr->second))
         {
@@ -1720,7 +1722,7 @@ SpellGroupStackRule SpellMgr::CheckSpellGroupStackRules(uint32 spellid_1, uint32
 
     SpellGroupStackRule rule = SPELL_GROUP_STACK_RULE_DEFAULT;
 
-    for (std::set<SpellGroup>::iterator itr = groups.begin(); itr!= groups.end(); ++itr)
+    for (auto itr = groups.begin(); itr != groups.end(); ++itr)
     {
         SpellGroupStackMap::const_iterator found = mSpellGroupStack.find(*itr);
         if (found != mSpellGroupStack.end())
