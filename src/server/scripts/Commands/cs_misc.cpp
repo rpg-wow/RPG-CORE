@@ -962,7 +962,7 @@ public:
                 return false;
             }
 
-            Player* player = sObjectMgr.GetPlayer(kickName);
+            Player* player = sObjectMgr.GetPlayer(name.c_str());
             if (!player)
             {
                 handler->SendSysMessage(LANG_PLAYER_NOT_FOUND);
