@@ -22,7 +22,7 @@ public:
 
         static std::vector<ChatCommand> commandTable =
         {
-            { "gorup",          SEC_MODERATOR,   true, nullptr,          "", groupCommandTable }
+            { "group",          SEC_MODERATOR,   true, nullptr,          "", groupCommandTable }
         };
 
         return commandTable;

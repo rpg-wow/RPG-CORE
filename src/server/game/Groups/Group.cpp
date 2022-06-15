@@ -399,6 +399,12 @@ void Group::ChangeLeader(const uint64& guid)
     if (slot == m_memberSlots.end())
         return;
 
+    Player* player = ObjectAccessor::FindPlayer(slot->guid);
+
+    // Don't allow switching leader to offline players
+    if (!player)
+        return;
+
     Player* oldLeader = sObjectMgr.GetPlayer(this->GetLeaderGUID());
     _setLeader(guid);
     Player* newLeader = sObjectMgr.GetPlayer(guid);
