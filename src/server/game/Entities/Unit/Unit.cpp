@@ -8446,6 +8446,7 @@ uint32 Unit::SpellDamageBonus(Unit* victim, SpellEntry const* spellProto, uint32
     CoefficientPtc /= 100.0f;
 
     //float DoneActualBenefit = DoneAdvertisedBenefit * (CastingTime / 3500.0f) * DotFactor * SpellModSpellDamage * LvlPenalty;
+    sScriptMgr.OnGetSpellDamageBonus(this, victim, spellProto, DoneTotalMod, damagetype);
 
     float DoneActualBenefit = DoneAdvertisedBenefit * CoefficientPtc * LvlPenalty;
     float TakenActualBenefit = TakenAdvertisedBenefit * DotFactor * LvlPenalty;
@@ -8465,8 +8466,6 @@ uint32 Unit::SpellDamageBonus(Unit* victim, SpellEntry const* spellProto, uint32
 
     if (GetTypeId() == TYPEID_UNIT && !IsPet())
         tmpDamage *= ToCreature()->GetSpellDamageMod(ToCreature()->GetCreatureTemplate()->rank);
-
-    sScriptMgr.OnGetSpellDamageBonus(this, victim, spellProto, tmpDamage, damagetype);
 
     return tmpDamage > 0 ? uint32(tmpDamage) : 0;
 }
@@ -8896,6 +8895,7 @@ uint32 Unit::SpellHealingBonus(SpellEntry const* spellProto, uint32 healamount, 
         //ActualBenefit = (float)AdvertisedBenefit * ((float)CastingTime / 3500.0f) * DotFactor * SpellModSpellDamage * LvlPenalty;
         ActualBenefit = (float)AdvertisedBenefit * CoefficientPtc * LvlPenalty;
     }
+    sScriptMgr.OnGetSpellHealingBonus(this, spellProto, ActualBenefit, damagetype, victim);
 
     // use float as more appropriate for negative values and percent applying
     float heal = healamount + ActualBenefit;
@@ -8928,8 +8928,6 @@ uint32 Unit::SpellHealingBonus(SpellEntry const* spellProto, uint32 healamount, 
         if (pctMod)
             heal = heal * (100 + pctMod) / 100;
     }
-
-    sScriptMgr.OnGetSpellHealingBonus(this, spellProto, heal, damagetype, victim);
 
     heal *= TotalHealPct;
 
@@ -9270,14 +9268,14 @@ void Unit::MeleeDamageBonus(Unit* victim, uint32* pdamage, WeaponAttackType attT
             TakenTotalMod *= ((*i)->GetModifierValue() + 100.0f) / 100.0f;
     }
 
+    sScriptMgr.OnGetMeleeDamageBonus(this, victim, DoneTotalMod, attType, spellProto);
+
     float tmpDamage = float(int32(*pdamage) + DoneFlatBenefit) * DoneTotalMod;
 
     // apply spellmod to Done damage
     if (spellProto)
         if (Player* modOwner = GetSpellModOwner())
             modOwner->ApplySpellMod(spellProto->Id, SPELLMOD_DAMAGE, tmpDamage);
-
-    sScriptMgr.OnGetMeleeDamageBonus(this, victim, tmpDamage, attType, spellProto);
 
     tmpDamage = (tmpDamage + TakenFlatBenefit) * TakenTotalMod;
 
