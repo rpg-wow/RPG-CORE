@@ -408,6 +408,10 @@ void Log::outDB(LogTypes type, const char* str)
     if (!LoginDatabase.IsConnected())
         return;
 
+    // Config option
+    if (sConfig.GetBoolDefault("Log.Database", false))
+        return;
+
     std::string new_str(str);
     LoginDatabase.escape_string(new_str);
     LoginDatabase.PExecute("INSERT INTO logs (time, realm, type, string) "

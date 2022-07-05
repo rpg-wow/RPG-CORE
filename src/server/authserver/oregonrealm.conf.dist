@@ -119,6 +119,9 @@ ConfVersion=2015070961
 #        Default: 0 (Ban IP)
 #                 1 (Ban Account)
 #
+#	Log.Database
+#	   Disable logging in the DB under Realm.Logs
+#
 ###############################################################################
 
 LoginDatabaseInfo = "127.0.0.1;3306;oregon;oregon;realmd"
@@ -139,3 +142,4 @@ RealmsStateUpdateDelay = 20
 WrongPass.MaxCount = 0
 WrongPass.BanTime = 600
 WrongPass.BanType = 0
+Log.Database = 0
