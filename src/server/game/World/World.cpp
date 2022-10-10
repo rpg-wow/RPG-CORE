@@ -1992,7 +1992,7 @@ void World::LoadAutobroadcasts()
 
 void World::LoadIp2nation()
 {
-    QueryResult* result = WorldDatabase.Query("SELECT count(c.code) FROM ip2nationCountries c, ip2nation i WHERE c.code = i.country");
+    QueryResult* result = WorldDatabase.Query("SELECT count(c.code) FROM ip2nationcountries c, ip2nation i WHERE c.code = i.country");
     uint32 count = 0;
 
     if (result)

@@ -1589,7 +1589,7 @@ public:
                 EndianConvertReverse(ip);
 #endif
 
-                if (QueryResult* result2 = WorldDatabase.PQuery("SELECT c.country FROM ip2nationCountries c, ip2nation i WHERE "
+                if (QueryResult* result2 = WorldDatabase.PQuery("SELECT c.country FROM ip2nationcountries c, ip2nation i WHERE "
                     "i.ip < %u AND c.code = i.country ORDER BY i.ip DESC LIMIT 0,1", ip))
                 {
                     Field* fields2 = result2->Fetch();
