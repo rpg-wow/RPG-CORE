@@ -139,7 +139,7 @@ bool Group::Create(const uint64& guid, const char* name)
     return true;
 }
 
-bool Group::LoadGroupFromDB(const uint64& leaderGuid, QueryResult* result, bool loadMembers)
+bool Group::LoadGroupFromDB(const uint64& leaderGuid, QueryResult_AutoPtr result, bool loadMembers)
 {
     if (isBGGroup())
         return false;
@@ -397,6 +397,12 @@ void Group::ChangeLeader(const uint64& guid)
     member_citerator slot = _getMemberCSlot(guid);
 
     if (slot == m_memberSlots.end())
+        return;
+
+    Player* player = ObjectAccessor::FindPlayer(slot->guid);
+
+    // Don't allow switching leader to offline players
+    if (!player)
         return;
 
     Player* oldLeader = sObjectMgr.GetPlayer(this->GetLeaderGUID());
@@ -1745,7 +1751,7 @@ void Group::BroadcastGroupUpdate(void)
                 pet->ForceValuesUpdateAtIndex(UNIT_FIELD_FACTIONTEMPLATE);
             }
 
-            sLog.outDebug("-- Forced group value update for '%s'", pp->GetName());
+            DEBUG_LOG("-- Forced group value update for '%s'", pp->GetName());
         }
     }
 }

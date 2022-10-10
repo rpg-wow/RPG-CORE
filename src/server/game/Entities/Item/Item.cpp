@@ -375,8 +375,7 @@ void Item::SaveToDB()
                 CharacterDatabase.PExecute("DELETE FROM item_text WHERE id = '%u'", GetUInt32Value(ITEM_FIELD_ITEM_TEXT_ID));
             CharacterDatabase.PExecute("DELETE FROM item_instance WHERE guid = '%u'", guid);
             if (HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_WRAPPED))
-                CharacterDatabase.PExecute("DELETE FROM character_gifts WHERE item_guid = '%u'", GetGUIDLow());
-            delete this;
+                CharacterDatabase.PExecute("DELETE FROM character_gifts WHERE item_guid = '%u'", guid);
             return;
         }
     case ITEM_UNCHANGED:
