@@ -2,12 +2,19 @@ import time, os, random, getpass, hashlib
 from os import system as cmd
 from configparser import ConfigParser
 
-source_path = ""
-output_build = ""
-mysql_user = ""
-mysql_pass = ""
-RepoToClone = ""
-cores = 2
+cfg = ConfigParser()
+cfg.read('config.ini')
+
+# MySQL Information
+mysql_user = (cfg.get('MySQL', 'username'))
+mysql_pass = (cfg.get('MySQL', 'password'))
+
+# Other Information
+source_path = (cfg.get('Information', 'source_location'))  # get source Locatin
+output_build = (cfg.get('Information', 'build_location')) # Where to compile the source
+RepoToClone = (cfg.get('Information', 'Repository'))      # which source to download
+git_branch = (cfg.get('Information', 'Branch'))  # Which Branch
+cores = (cfg.get('Information', 'Cores'))
 
 def main():
     cmd("clear")
@@ -55,7 +62,7 @@ def ServerNameRealmList():
         server_name = "OregonCore"
     if user_realmlist == "" or user_realmlist == None:
         user_realmlist = "127.0.0.1"
-    cmd("mysql -u root -p%s -e \"UPDATE realmd.realmlist SET address = '%s', name = '%s' WHERE id = '1'\"" %(mysql_pass, user_realmlist, server_name))
+    cmd("mysql -u %s -p%s -e \"UPDATE realmd.realmlist SET address = '%s', name = '%s' WHERE id = '1'\"" %(mysql_user, mysql_pass, user_realmlist, server_name))
     print(" ** Details have been updated! **")
     time.sleep(3)
     main()
@@ -67,18 +74,18 @@ def DownloadSource():
     cmd( "sudo apt-get update && apt-get upgrade && sudo apt-get install screen git cmake make gcc g++ clang libmariadbclient-dev libssl-dev libbz2-dev libreadline-dev libncurses-dev mariadb-server libace-6.* libace-dev  build-essential cmake git binutils-dev libiberty-dev libbz2-dev openssl libssl-dev zlib1g-dev libtool mariadb-client unrar libace-dev unzip libncurses-dev -y")
     cmd("clear")
     cmd("** CLONING SELECTED BRANCH **\n\n")
-    cmd("git clone %s -b '%s' '%s'" %(RepoToClone, git_branch, source_path))
+    cmd("git clone %s  '%s'" %(RepoToClone,  source_path))
     cmd("mkdir %s/build" %source_path)
     pass
 
 def DownloadDB():
     print("** Downloading and Importing Database ** \n\n")
-    cmd("wget https://github.com/talamortis/OregonCore/releases/download/v1.0/database_17_11_19.zip -P '%s'" %source_path)
-    cmd("unzip '%s'/database_17_11_19.zip -d '%s'" %(source_path, source_path))
+    cmd("wget https://github.com/talamortis/OregonCore/releases/download/v1.0/2022_05_24_world_database.zip -P '%s'" %source_path)
+    cmd("unzip '%s'/2022_05_24_world_database.zip -d '%s'" %(source_path, source_path))
     cmd("mysql -u root -p%s < %s/sql/create/create_mysql.sql" % (mysql_pass, source_path))
     cmd("mysql -u root -p%s realmd < %s/sql/base/realmd.sql" % (mysql_pass, source_path))
     cmd("mysql -u root -p%s characters < %s/sql/base/characters.sql" %(mysql_pass, source_path))
-    cmd("mysql -u root -p%s world < %s/database_17_11_19.sql" %(mysql_pass, source_path))
+    cmd("mysql -u root -p%s world < %s/2022_05_24_world_database.sql" %(mysql_pass, source_path))
     main()
     pass
 
@@ -92,7 +99,7 @@ def CompileSource():
     pass
 
 def downloadData():
-    cmd("wget http://burninglegion.co.uk/data.zip -P %s"%source_path)
+    cmd("wget https://oregon-core.info/data/Data.zip -P %s"%source_path)
     cmd("mkdir %s/data" %output_build)#make data file in build
     cmd("unzip %s/data.zip -d %s/data" %(source_path, output_build))
     main()
@@ -105,19 +112,5 @@ def PullUpdates():
     cmd("clear")
     main()
 pass
-
-cfg = ConfigParser()
-cfg.read('config.ini')
-
-# MySQL Information
-mysql_user = (cfg.get('MySQL', 'username'))
-mysql_pass = (cfg.get('MySQL', 'password'))
-
-# Other Information
-source_path = (cfg.get('Information', 'source_location'))  # get source Locatin
-output_build = (cfg.get('Information', 'build_location')) # Where to compile the source
-RepoToClone = (cfg.get('Information', 'Repository'))      # which source to download
-git_branch = (cfg.get('Information', 'Branch'))  # Which Branch
-cores = (cfg.get('Information', 'Cores'))
 
 main()
